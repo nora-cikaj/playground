@@ -1,11 +1,28 @@
+'use client';
+
+import { useEffect, useState } from "react";
 import Light from "../light";
 import { lights } from "../../util";
+import { lightDurations } from "../../constants";
 
 const TrafficLightContainer = () => {
+  const [activeLightIndex, setActiveLightIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const nextLightIndex = (activeLightIndex - 1 + lights.length) % lights.length; // Lights will light up in reverse order
+    const duration = lightDurations[lights[activeLightIndex]];
+
+    const timer = setTimeout(() => {
+      setActiveLightIndex(nextLightIndex);
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [activeLightIndex]);
+
   return (
-    <div className="w-48 h-96 bg-gray-800 rounded-lg flex flex-col items-center justify-around p-4">
-        {lights.map((color) => (
-            <Light key={color} color={color} />
+    <div className="w-48 h-96 bg-gray-800 rounded-3xl flex flex-col items-center justify-around p-4">
+        {lights.map((color, index) => (
+            <Light key={color} color={color} isActive={index === activeLightIndex} />
         ))}
     </div>
   );

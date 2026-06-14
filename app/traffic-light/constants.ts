@@ -9,3 +9,9 @@ export const lightStyles = {
     [lightColors.YELLOW]: "bg-yellow-500",
     [lightColors.GREEN]: "bg-green-500",
 } as const;
+
+export const lightDurations = {
+    [lightColors.RED]: 4000,
+    [lightColors.YELLOW]: 1000,
+    [lightColors.GREEN]: 3000,
+} as const;
